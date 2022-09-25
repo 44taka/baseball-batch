@@ -1,0 +1,16 @@
+fire
+pydantic
+beautifulsoup4
+loguru
+orator
+requests
+PyMySQL
+python-dotenv
+pytest
+pytest-mock
+pytest-cov
+
+# コーディングスタイル関連
+pep8
+flake8
+pylint
