@@ -7,13 +7,14 @@ from loguru import logger
 from configs.database import db
 from infrastructure.scraping.swallows import SwallowsScraping
 from infrastructure.persistence.win_loss import WinLossPersistence
+from infrastructure.persistence.team import TeamPersistence
 from usecase.scraping import ScrapingUseCase
 from presentation.scraping import ScrapingPresentation
 
 
 class SwallowsCommand(object):
 
-    def run(self):
+    def run(self) -> None:
         logger.info('start swallows scraping.')
         # 動的にする
         urls = [
@@ -27,10 +28,13 @@ class SwallowsCommand(object):
             'https://www.yakult-swallows.co.jp/game/schedule/2022/10',
         ]
 
+        # 処理準備
         win_loss_persistence = WinLossPersistence(db=db)
+        team_persistence = TeamPersistence(db=db)
         swallows_scraping = SwallowsScraping()
-        # TODO: ここでDIコンテナ使うのかな？
-        swallows_usecase = ScrapingUseCase(sp=swallows_scraping, wlr=win_loss_persistence)
+        swallows_usecase = ScrapingUseCase(
+            sp=swallows_scraping, wlr=win_loss_persistence, tr=team_persistence
+        )
         swallows_presentation = ScrapingPresentation(su=swallows_usecase)
 
         # 処理開始

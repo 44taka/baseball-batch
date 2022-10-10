@@ -9,7 +9,7 @@ from domain.model.win_loss import WinLossModel
 
 
 class SwallowsScraping(IScrapingRepository):
-    def scrape(self, url: str) -> List[WinLossModel]:
+    def scrape(self, team_id: int, url: str) -> List[WinLossModel]:
         try:
             response = requests.get(url)
         except Exception as e:
@@ -38,7 +38,6 @@ class SwallowsScraping(IScrapingRepository):
                 score_mark = element.select_one('.t-calendar-score-mark img')
                 if score_mark is None:
                     continue
-
                 # リストに追加
                 data.append(
                     WinLossModel(
@@ -47,7 +46,7 @@ class SwallowsScraping(IScrapingRepository):
                         is_win=1 if score_mark.attrs['alt'] == '◯' else 0,
                         is_lose=1 if score_mark.attrs['alt'] == '●' else 0,
                         is_draw=1 if score_mark.attrs['alt'] == '△' else 0,
-                        team_id=1
+                        team_id=team_id
                     )
                 )
             return data

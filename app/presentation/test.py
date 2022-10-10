@@ -1,7 +1,9 @@
+from injector import inject
 from domain.usecase.test import ITestUseCase
 
 
 class TestPresentation(object):
+    @inject
     def __init__(self, tu: ITestUseCase):
         self._tu = tu
 
