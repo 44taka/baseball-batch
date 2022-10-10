@@ -6,5 +6,5 @@ from domain.model.win_loss import WinLossModel
 
 class IScrapingRepository(ABC):
     @abstractmethod
-    def scrape(self, url: str) -> List[WinLossModel]:
+    def scrape(self, team_id: int, url: str) -> List[WinLossModel]:
         raise NotImplementedError
