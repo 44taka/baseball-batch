@@ -20,8 +20,8 @@ class WinLossModel(BaseModel):
     """
     @validator('game_status')
     def check_game_status(cls, v):
-        if v not in [1, 2, 3]:
-            raise ValueError('input 1 or 2 or 3.')
+        if v not in [0, 1, 2, 3]:
+            raise ValueError('input 0 or 1 or 2 or 3.')
         return v
 
     @validator('is_win', 'is_lose', 'is_draw', 'is_deleted')
