@@ -43,7 +43,7 @@ class SwallowsCommand(object):
             logger.info('scrape url: ' + url)
             logger.info('scrape status: processing...')
             status = swallows_presentation.run(
-                url=url
+                team_id=1, url=url
             )
             time.sleep(random.randint(1, 3))
         logger.info('end swallows scraping.')

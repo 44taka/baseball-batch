@@ -1,12 +1,12 @@
 import fire
 
-from command.test_command import TestCommand
 from command.swallows import SwallowsCommand
+from command.fighters import FightersCommand
 
 
 class Main(object):
-    test = TestCommand
     swallows = SwallowsCommand
+    fighters = FightersCommand
 
 
 if __name__ == '__main__':
