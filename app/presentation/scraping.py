@@ -5,9 +5,9 @@ class ScrapingPresentation(object):
     def __init__(self, su: IScrapingUseCase):
         self._su = su
 
-    def run(self, url) -> int:
+    def run(self, team_id: int, url: str) -> int:
         try:
-            self._su.scrape(url=url)
+            self._su.scrape(team_id=team_id, url=url)
             return 0
         except:
             return 1

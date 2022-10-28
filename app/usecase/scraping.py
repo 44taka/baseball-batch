@@ -14,8 +14,8 @@ class ScrapingUseCase(IScrapingUseCase):
         self._wlr = wlr
         self._tr = tr
 
-    def scrape(self, url: str) -> int:
-        team = self._tr.find_by_id(team_id=1)
+    def scrape(self, team_id: int, url: str) -> int:
+        team = self._tr.find_by_id(team_id=team_id)
         for datum in self._sp.scrape(team_id=team.id, url=url):
             self._wlr.save(data=datum)
         return 0
