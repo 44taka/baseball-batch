@@ -16,8 +16,7 @@ class TeamPersistence(ITeamRepository):
         try:
             result = self._db.table('team_mst').where('is_deleted', 0).get()
             return list(map(TeamModel.parse_obj, result))
-        except Exception as e:
-            logger.exception(e)
+        except Exception:
             raise
 
     def find_by_id(self, team_id: int) -> TeamModel:

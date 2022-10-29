@@ -1,3 +1,5 @@
+from loguru import logger
+
 from domain.usecase.scraping import IScrapingUseCase
 
 
@@ -9,5 +11,6 @@ class ScrapingPresentation(object):
         try:
             self._su.scrape(team_id=team_id, url=url)
             return 0
-        except:
+        except Exception as e:
+            logger.exception(e)
             return 1
