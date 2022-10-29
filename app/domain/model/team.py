@@ -6,6 +6,7 @@ class TeamModel(BaseModel):
     id: int
     league_kbn: int
     team_name: str
+    yahoo_team_id: int
     is_deleted: int
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
