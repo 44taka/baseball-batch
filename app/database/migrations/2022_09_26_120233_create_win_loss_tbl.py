@@ -17,8 +17,6 @@ class CreateWinLossTbl(Migration):
             table.boolean('is_deleted').default(0)
             table.integer('team_id').unsigned()
             table.timestamps()
-            # 外部キー制約
-            table.foreign('team_id').references('id').on('team_mst').on_delete('cascade')
 
     def down(self):
         """

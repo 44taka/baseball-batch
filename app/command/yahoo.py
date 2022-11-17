@@ -3,8 +3,11 @@ import time
 import random
 
 from loguru import logger
+from orator import DatabaseManager
 
-from configs.database import db
+from utils.util import Util
+from configs.batch import BatchEnvConfig
+from configs.database import DatabaseConfig
 from infrastructure.scraping.yahoo import YahooScraping
 from infrastructure.persistence.win_loss import WinLossPersistence
 from infrastructure.persistence.team import TeamPersistence
@@ -16,7 +19,6 @@ class YahooCommand(object):
 
     def run(self, team_id: int) -> None:
         logger.info('start yahoo sports scraping.')
-        # urls
         urls = [
             'https://baseball.yahoo.co.jp/npb/teams/{}/schedule?month=2022-03',
             'https://baseball.yahoo.co.jp/npb/teams/{}/schedule?month=2022-04',
@@ -27,6 +29,12 @@ class YahooCommand(object):
             'https://baseball.yahoo.co.jp/npb/teams/{}/schedule?month=2022-09',
             'https://baseball.yahoo.co.jp/npb/teams/{}/schedule?month=2022-10',
         ]
+
+        # DB準備
+        db_config = Util.get_database_config_dict(
+            database_config=DatabaseConfig(), batch_env_config=BatchEnvConfig()
+        )
+        db = DatabaseManager(config={'mysql': db_config})
 
         # 処理準備
         win_loss_persistence = WinLossPersistence(db=db)

@@ -1,10 +1,12 @@
 import sys
-
-from loguru import logger
 from datetime import date
 
+from loguru import logger
+from orator import DatabaseManager
+
 from utils.util import Util
-from configs.database import db
+from configs.batch import BatchEnvConfig
+from configs.database import DatabaseConfig
 from infrastructure.persistence.win_loss import WinLossPersistence
 from infrastructure.persistence.win_loss_deposit import WinLossDepositPersistence
 from usecase.aggregating import AggregatingUseCase
@@ -15,6 +17,12 @@ class AggregatingCommand(object):
 
     def run(self) -> None:
         logger.info('start aggregation command.')
+
+        # DB準備
+        db_config = Util.get_database_config_dict(
+            database_config=DatabaseConfig(), batch_env_config=BatchEnvConfig()
+        )
+        db = DatabaseManager(config={'mysql': db_config})
 
         # 処理準備
         win_loss_persistence = WinLossPersistence(db=db)
