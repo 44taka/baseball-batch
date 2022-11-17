@@ -1,5 +1,13 @@
-from orator import DatabaseManager
+# from orator import DatabaseManager
 from pydantic import BaseSettings
+
+
+class DatabaseCaConfig(BaseSettings):
+    ca: str
+
+    class Config:
+        env_file_encoding = 'utf-8'
+        env_prefix = 'mysql_'
 
 
 class DatabaseConfig(BaseSettings):
@@ -10,11 +18,8 @@ class DatabaseConfig(BaseSettings):
     user: str
     password: str
     prefix: str = ''
+    ssl: DatabaseCaConfig = DatabaseCaConfig()
 
     class Config:
         env_file_encoding = 'utf-8'
         env_prefix = 'mysql_'
-
-
-db_config = DatabaseConfig()
-db = DatabaseManager(config={'mysql': db_config.dict()})

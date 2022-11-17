@@ -1,7 +1,9 @@
-# from urllib.parse import urlparse, parse_qs
 from typing import List
 import datetime
 import urllib.parse
+
+from configs.database import DatabaseConfig
+from configs.batch import BatchEnvConfig
 
 
 class Util(object):
@@ -25,3 +27,10 @@ class Util(object):
     @staticmethod
     def is_in_period(target_date: datetime.date, from_date: datetime.date, to_date: datetime.date) -> bool:
         return from_date <= target_date <= to_date
+
+    @staticmethod
+    def get_database_config_dict(database_config: DatabaseConfig, batch_env_config: BatchEnvConfig) -> dict:
+        database_config_dict = database_config.dict()
+        if batch_env_config.env == 'production':
+            del database_config_dict['ssl']
+        return database_config_dict
