@@ -31,6 +31,6 @@ class Util(object):
     @staticmethod
     def get_database_config_dict(database_config: DatabaseConfig, batch_env_config: BatchEnvConfig) -> dict:
         database_config_dict = database_config.dict()
-        if batch_env_config.env == 'production':
+        if batch_env_config.env != 'production':
             del database_config_dict['ssl']
         return database_config_dict

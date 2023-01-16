@@ -10,9 +10,10 @@ class CreateTeamMst(Migration):
         with self.schema.create('team_mst') as table:
             table.increments('id')
             table.small_integer('league_kbn')
-            table.string('team_name', 50)
-            table.string('team_color_cd', 10)
-            table.integer('yahoo_team_id').unsigned()
+            table.string('code', 2).unique()
+            table.string('name', 50)
+            table.string('short_name', 10)
+            table.string('color', 10)
             table.boolean('is_deleted').default(0)
             table.timestamps()
 

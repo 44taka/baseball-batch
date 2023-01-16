@@ -1,12 +1,12 @@
 import fire
 
-from command.yahoo import YahooCommand
-from command.aggregating import AggregatingCommand
+# from command.yahoo import YahooCommand
+# from command.aggregating import AggregatingCommand
+from command.npb import NpbCommand
 
 
 class Main(object):
-    yahoo = YahooCommand
-    aggregating = AggregatingCommand()
+    npb = NpbCommand
 
 
 if __name__ == '__main__':

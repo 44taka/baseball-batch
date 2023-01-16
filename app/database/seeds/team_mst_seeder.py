@@ -12,86 +12,98 @@ class TeamMstSeeder(Seeder):
             {
                 'id': 1,
                 'league_kbn': 1,
-                'team_name': '東京ヤクルトスワローズ',
-                'team_color_cd': '#1a854f',
-                'yahoo_team_id': 2
+                'code': 's',
+                'name': '東京ヤクルトスワローズ',
+                'short_name': 'ヤクルト',
+                'color': '#1a854f',
             },
             {
                 'id': 2,
                 'league_kbn': 1,
-                'team_name': '阪神タイガース',
-                'team_color_cd': '#ffdd00',
-                'yahoo_team_id': 5
+                'code': 't',
+                'name': '阪神タイガース',
+                'short_name': '阪神',
+                'color': '#ffdd00',
             },
             {
                 'id': 3,
                 'league_kbn': 1,
-                'team_name': '読売ジャイアンツ',
-                'team_color_cd': '#ef8200',
-                'yahoo_team_id': 1
+                'code': 'g',
+                'name': '読売ジャイアンツ',
+                'short_name': '巨人',
+                'color': '#ef8200',
             },
             {
                 'id': 4,
                 'league_kbn': 1,
-                'team_name': '広島東洋カープ',
-                'team_color_cd': '#c10016',
-                'yahoo_team_id': 6
+                'code': 'c',
+                'name': '広島東洋カープ',
+                'short_name': '広島',
+                'color': '#c10016',
             },
             {
                 'id': 5,
                 'league_kbn': 1,
-                'team_name': '中日ドラゴンズ',
-                'team_color_cd': '#104f8f',
-                'yahoo_team_id': 4
+                'code': 'd',
+                'name': '中日ドラゴンズ',
+                'short_name': '中日',
+                'color': '#104f8f',
             },
             {
                 'id': 6,
                 'league_kbn': 1,
-                'team_name': '横浜DeNAベイスターズ',
-                'team_color_cd': '#0096e0',
-                'yahoo_team_id': 3
+                'code': 'db',
+                'name': '横浜DeNAベイスターズ',
+                'short_name': 'DeNA',
+                'color': '#0096e0',
             },
             {
                 'id': 7,
                 'league_kbn': 2,
-                'team_name': 'オリックスバファローズ',
-                'team_color_cd': '#43469c',
-                'yahoo_team_id': 11
+                'code': 'b',
+                'name': 'オリックスバファローズ',
+                'short_name': 'オリックス',
+                'color': '#43469c',
             },
             {
                 'id': 8,
                 'league_kbn': 2,
-                'team_name': '千葉ロッテマリーンズ',
-                'team_color_cd': '#818181',
-                'yahoo_team_id': 9
+                'code': 'm',
+                'name': '千葉ロッテマリーンズ',
+                'short_name': 'ロッテ',
+                'color': '#818181',
             },
             {
                 'id': 9,
                 'league_kbn': 2,
-                'team_name': '東北楽天ゴールデンイーグルス',
-                'team_color_cd': '#940028',
-                'yahoo_team_id': 376
+                'code': 'e',
+                'name': '東北楽天ゴールデンイーグルス',
+                'short_name': '楽天',
+                'color': '#940028',
             },
             {
                 'id': 10,
                 'league_kbn': 2,
-                'team_name': '福岡ソフトバンクホークス',
-                'team_color_cd': '#ffb300',
-                'yahoo_team_id': 12
+                'code': 'h',
+                'name': '福岡ソフトバンクホークス',
+                'short_name': 'ソフトバンク',
+                'color': '#ffb300',
             },
             {
                 'id': 11,
                 'league_kbn': 2,
-                'team_name': '北海道日本ハムファイターズ',
-                'team_color_cd': '#00558c',
-                'yahoo_team_id': 8
+                'code': 'f',
+                'name': '北海道日本ハムファイターズ',
+                'short_name': '日本ハム',
+                'color': '#00558c',
             },
             {
                 'id': 12,
                 'league_kbn': 2,
-                'team_name': '埼玉西武ライオンズ',
-                'team_color_cd': '#213258',
-                'yahoo_team_id': 7
+                'code': 'l',
+                'name': '埼玉西武ライオンズ',
+                'short_name': '西武',
+                'color': '#213258',
             },
         ]
         # DBにデータがないものだけ登録

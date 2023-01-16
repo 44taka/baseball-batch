@@ -5,9 +5,10 @@ from pydantic import BaseModel, validator
 class TeamModel(BaseModel):
     id: int
     league_kbn: int
-    team_name: str
-    team_color_cd: str
-    yahoo_team_id: int
+    code: str
+    name: str
+    short_name: str
+    color_cd: str
     is_deleted: int
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
@@ -21,10 +22,28 @@ class TeamModel(BaseModel):
             raise ValueError('league_kbn は 1 か 2 を指定してください。')
         return v
 
-    @validator('team_name')
-    def check_team_name_max_length(cls, v):
+    @validator('code')
+    def check_code_max_length(cls, v):
+        if len(v) > 2:
+            raise ValueError('code は2文字以内で入力してください。')
+        return v
+
+    @validator('name')
+    def check_name_max_length(cls, v):
         if len(v) > 50:
             raise ValueError('team_name は50文字以内で入力してください。')
+        return v
+
+    @validator('short_name')
+    def check_short_name_max_length(cls, v):
+        if len(v) > 10:
+            raise ValueError('short_name は50文字以内で入力してください。')
+        return v
+
+    @validator('color')
+    def check_color_max_length(cls, v):
+        if len(v) > 10:
+            raise ValueError('color は50文字以内で入力してください。')
         return v
 
     @validator('is_deleted')
