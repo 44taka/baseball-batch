@@ -8,7 +8,7 @@ class TeamModel(BaseModel):
     code: str
     name: str
     short_name: str
-    color_cd: str
+    color: str
     is_deleted: int
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
