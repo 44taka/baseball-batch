@@ -3,7 +3,7 @@ import datetime
 import urllib.parse
 
 from configs.database import DatabaseConfig
-from configs.batch import BatchEnvConfig
+from configs.batch import BatchConfig
 
 
 class Util(object):
@@ -29,8 +29,8 @@ class Util(object):
         return from_date <= target_date <= to_date
 
     @staticmethod
-    def get_database_config_dict(database_config: DatabaseConfig, batch_env_config: BatchEnvConfig) -> dict:
+    def get_database_config_dict(database_config: DatabaseConfig, batch_config: BatchConfig) -> dict:
         database_config_dict = database_config.dict()
-        if batch_env_config.env != 'production':
+        if batch_config.env != 'production':
             del database_config_dict['ssl']
         return database_config_dict

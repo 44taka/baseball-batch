@@ -11,7 +11,7 @@ class NpbPresentation(object):
         self._tr = tr
         self._sbr = sbr
 
-    def run(self, team_id: int, url: str) -> int:
+    async def run(self, team_id: int, url: str) -> int:
         try:
             # team_idのバリデーション
             team = self._tr.find_by_id(team_id=team_id)
