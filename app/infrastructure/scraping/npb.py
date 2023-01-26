@@ -12,7 +12,6 @@ from domain.model.team import TeamModel
 
 class NpbScraping(IScrapingRepository):
     def scrape(self, team_id: int, teams: List[TeamModel], url: str) -> List[ScoreboardModel]:
-        logger.info('scrape url: ' + url)
         try:
             # TODO: SSL署名周りでエラーが起きるので暫定処理
             # https://stackoverflow.com/questions/66689696/urllib3-error-ssl-wrong-signature-type
@@ -20,7 +19,7 @@ class NpbScraping(IScrapingRepository):
             response = requests.get(url)
             response.encoding = 'utf-8'
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             raise
 
         # スクレピング
@@ -34,25 +33,21 @@ class NpbScraping(IScrapingRepository):
                 # 試合がない日はスキップ
                 if not element.select_one('td.termmdd'):
                     continue
-
                 # tdのelement格納
                 td = element.select('td')
-
-                # 月日を取得
+                # 月日取得
                 day = td[0].text
                 if '/' in td[0].text:
                     month, day = td[0].text.split('/')
-
-                # TODO: ここ直したい
+                # 対戦チームID取得
                 vs_team_id = None
                 for team in teams:
                     if team.short_name == td[1].text.replace('　', ''):
                         vs_team_id = team.id
                         break
-
-                # スコア取得
+                # スコア(得点、失点)取得
                 runs_scored, runs_allowed = td[6].text.split('-')
-
+                # データ格納
                 data.append(
                     ScoreboardModel(
                         date=datetime.date(int(year), int(month), int(day)),
@@ -69,5 +64,5 @@ class NpbScraping(IScrapingRepository):
                 )
             return data
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             raise

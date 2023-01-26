@@ -20,7 +20,7 @@ class ScoreboardPersistence(IScoreboardRepository):
             # logger.debug(query.to_sql())
             return query.first()
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             raise
 
     def insert(self, data: ScoreboardModel) -> ScoreboardModel:
@@ -31,7 +31,7 @@ class ScoreboardPersistence(IScoreboardRepository):
                 data.id = result
             return data
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             raise
 
     def update(self, data: ScoreboardModel) -> ScoreboardModel:
@@ -46,5 +46,5 @@ class ScoreboardPersistence(IScoreboardRepository):
                 .update(data_dict)
             return data
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             raise

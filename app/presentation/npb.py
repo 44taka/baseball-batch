@@ -18,6 +18,7 @@ class NpbPresentation(object):
             # チーム情報取得
             teams = self._tr.find_all()
             # スクレピング実行
+            logger.info('team: {}, url: {}'.format(team.name, url.format(team.code)))
             data = self._sr.scrape(
                 team_id=team.id, teams=teams, url=url.format(team.code)
             )
@@ -28,5 +29,5 @@ class NpbPresentation(object):
                     self._sbr.insert(data=datum)
             return 0
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             return 1

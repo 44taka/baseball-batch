@@ -1,8 +1,6 @@
-import sys
-import time
-import random
-
+from time import time
 import asyncio
+import sys
 
 from loguru import logger
 from orator import DatabaseManager
@@ -19,8 +17,11 @@ from presentation.npb import NpbPresentation
 class NpbCommand(object):
 
     async def run(self, team_id: int) -> None:
-        logger.info('start npb!!')
+        logger.info('-----------------------------------------------------------')
+        logger.info(f'BEGIN - NPB\'s Website is scraping.')
+        logger.info('-----------------------------------------------------------')
         # 設定ファイル準備
+        begin_time = time()
         batch_config = BatchConfig()
         db_config = Util.get_database_config_dict(
             database_config=DatabaseConfig(), batch_config=batch_config
@@ -37,7 +38,7 @@ class NpbCommand(object):
         status = 0
         # 非同期処理で並行処理を行う
         async with asyncio.TaskGroup() as tg:
-            # TODO: エラーハンドリングをしっかりと
+            # TODO: エラーハンドリングを組み込むこと
             task1 = tg.create_task(presentation.run(team_id=team_id, url=batch_config.url_april))
             task2 = tg.create_task(presentation.run(team_id=team_id, url=batch_config.url_may))
             task3 = tg.create_task(presentation.run(team_id=team_id, url=batch_config.url_june))
@@ -46,5 +47,8 @@ class NpbCommand(object):
             task6 = tg.create_task(presentation.run(team_id=team_id, url=batch_config.url_september))
             task7 = tg.create_task(presentation.run(team_id=team_id, url=batch_config.url_october))
 
-        logger.info('end npb!!')
+        logger.info('-----------------------------------------------------------')
+        logger.info('END - NPB\'s Website is scraping.')
+        logger.info('process time: ' + str(time() - begin_time) + ' seconds.')
+        logger.info('-----------------------------------------------------------')
         sys.exit(status)
