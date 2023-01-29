@@ -15,11 +15,11 @@ class NpbScraping(IScrapingRepository):
         try:
             # TODO: SSL署名周りでエラーが起きるので暫定処理
             # https://stackoverflow.com/questions/66689696/urllib3-error-ssl-wrong-signature-type
-            requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT@SECLEVEL=1'
+            # requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'DEFAULT@SECLEVEL=1'
             response = requests.get(url)
             response.encoding = 'utf-8'
-        except Exception as e:
-            logger.error(e)
+        except requests.exceptions.RequestException as e:
+            logger.error(f'code=800, error={e}')
             raise
 
         # スクレピング
@@ -62,7 +62,11 @@ class NpbScraping(IScrapingRepository):
                         rank=int(td[10].text),
                     )
                 )
+            logger.debug(f'data: {data}')
             return data
+        except AttributeError as e:
+            logger.error(f'code=900, error={e}')
+            raise
         except Exception as e:
-            logger.error(e)
+            logger.error(f'code=999, error={e}')
             raise

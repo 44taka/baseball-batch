@@ -1,23 +1,37 @@
 from loguru import logger
 
-from domain.repository.scraping import IScrapingRepository
-from domain.repository.win_loss import IWinLossRepository
 from domain.repository.team import ITeamRepository
-from domain.usecase.scraping import IScrapingUseCase
+from domain.repository.scraping import IScrapingRepository
+from domain.repository.scoreboard import IScoreboardRepository
+from domain.usecase.npb import INpbUseCase
 
 
-class ScrapingUseCase(IScrapingUseCase):
-    def __init__(self, sp: IScrapingRepository, wlr: IWinLossRepository, tr: ITeamRepository):
-        self._sp = sp
-        self._wlr = wlr
+class NpbUseCase(INpbUseCase):
+    def __init__(self, sr: IScrapingRepository, tr: ITeamRepository, sbr: IScoreboardRepository):
+        self._sr = sr
         self._tr = tr
+        self._sbr = sbr
 
-    def scrape(self, team_id: int, url: str) -> int:
+    def register(self, team_id: int, url: str) -> bool:
         try:
+            # team_idのバリデーション
             team = self._tr.find_by_id(team_id=team_id)
-            logger.debug('team name: ' + team.team_name)
-            for datum in self._sp.scrape(team_id=team.id, url=url.format(str(team.yahoo_team_id))):
-                self._wlr.save(data=datum)
-            return 0
-        except Exception:
-            raise
+            if team is None:
+                raise ValueError('team_id not exist.')
+            # チーム情報取得
+            teams = self._tr.find_all()
+            # スクレピング実行
+            logger.info(f'team: {team.name}, url: {url.format(team.code)}')
+            data = self._sr.scrape(
+                team_id=team.id, teams=teams, url=url.format(team.code)
+            )
+            # データ登録
+            for datum in data:
+                if self._sbr.find(data=datum):
+                    self._sbr.update(data=datum)
+                else:
+                    self._sbr.insert(data=datum)
+            return True
+        except ValueError as e:
+            logger.error(f'code: E001, error: {e}')
+            return False
