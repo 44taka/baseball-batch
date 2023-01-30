@@ -1,6 +1,7 @@
 from typing import List, Union
 
 from orator import DatabaseManager
+from orator.exceptions.query import QueryException
 from loguru import logger
 
 from domain.model.team import TeamModel
@@ -16,8 +17,11 @@ class TeamPersistence(ITeamRepository):
         try:
             result = self._db.table('team_mst').where('is_deleted', 0).get()
             return list(map(TeamModel.parse_obj, result))
+        except QueryException as e:
+            logger.error(f'code=901, error={e}')
+            raise
         except Exception as e:
-            logger.error(e)
+            logger.error(f'code=999, error={e}')
             raise
 
     def find_by_id(self, team_id: int) -> Union[TeamModel, None]:
@@ -27,6 +31,9 @@ class TeamPersistence(ITeamRepository):
             if result is None:
                 return None
             return TeamModel.parse_obj(result)
+        except QueryException as e:
+            logger.error(f'code=901, error={e}')
+            raise
         except Exception as e:
-            logger.error(e)
+            logger.error(f'code=999, error={e}')
             raise
